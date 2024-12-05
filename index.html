@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just Simple Things</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .widget {
+            width: 300px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .widget h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .input-group button:hover {
+            background-color: #0056b3;
+        }
+        .list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .list li {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <h2>Just Simple Things</h2>
+        <div class="input-group">
+            <input type="text" id="itemInput" placeholder="Was hat dir Freude bereitet?">
+            <button id="addButton">Hinzufügen</button>
+        </div>
+        <ul class="list" id="list"></ul>
+    </div>
+
+    <script>
+        const input = document.getElementById('itemInput');
+        const button = document.getElementById('addButton');
+        const list = document.getElementById('list');
+
+        // Load saved list from localStorage
+        const savedList = JSON.parse(localStorage.getItem('simpleThings')) || [];
+        savedList.forEach(item => addItemToList(item));
+
+        // Add new item
+        button.addEventListener('click', () => {
+            const value = input.value.trim();
+            if (value) {
+                addItemToList(value);
+                savedList.push(value);
+                localStorage.setItem('simpleThings', JSON.stringify(savedList));
+                input.value = '';
+            }
+        });
+
+        function addItemToList(item) {
+            const li = document.createElement('li');
+            li.textContent = item;
+            list.appendChild(li);
+        }
+    </script>
+</body>
+</html>
